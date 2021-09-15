@@ -1,0 +1,57 @@
+[alias]
+    a = add
+    b = branch
+    c = commit
+    d = diff
+    f = fetch
+    l = log
+    m = merge
+    o = checkout
+    s = status
+
+    ac  = !git add . & git commit
+    ca  = commit -a
+    co  = checkout
+    ln  = log --name-status -20   
+    lna = log --name-status
+    lg  = log --graph --date-order --pretty=format:'%h %Cred%d %Cgreen%ad %Cblue%cn %Creset%s' --date=format:'%Y-%m-%d %H:%M:%S' -20
+    lga = log --graph --date-order --pretty=format:'%h %Cred%d %Cgreen%ad %Cblue%cn %Creset%s' --date=format:'%Y-%m-%d %H:%M:%S'
+    lo  = log --oneline -20
+    loa = log --oneline
+    ob  = checkout -b
+    
+    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort
+
+[color]
+    ui = auto
+
+[diff]
+    compactionHeuristic = true
+
+[difftool]
+    prompt = false
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[init]
+    defaultBranch = main
+
+[merge]
+    ff = false
+
+[mergetool]
+    prompt = false
+
+[pull]
+    ff = only
+
+[push]
+    default = simple
+
+[user]
+    name = minorut
+    email = minorut@users.noreply.github.com
