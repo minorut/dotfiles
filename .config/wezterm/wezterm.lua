@@ -10,7 +10,7 @@ end
 config.use_ime = true
 
 -- フォント設定
-config.font = wezterm.font('MomiageMono Nerd Font', { weight = 'Medium' })
+config.font = wezterm.font('JetBrains Mono', { weight = 'Medium' })
 config.font_size = 16.0
 
 -- カラースキーム
