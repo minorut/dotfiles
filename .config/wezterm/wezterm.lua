@@ -10,9 +10,12 @@ end
 config.use_ime = true
 
 -- フォント設定
-config.font = wezterm.font('JetBrains Mono', { weight = 'Medium' })
-config.font = wezterm.font('MomiageMono Nerd Font', { weight = 'Medium' })
-config.font_size = 16.0
+-- config.font = wezterm.font('JetBrains Mono', { weight = 'Medium' })
+-- config.font = wezterm.font('MomiageMono Nerd Font', { weight = 'Medium' })
+config.font = wezterm.font('SOROEMONO', { weight = 'Medium' })
+config.line_height = 1.3
+config.font_size = 20.0
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
 -- カラースキーム
 config.color_schemes = {
@@ -20,7 +23,7 @@ config.color_schemes = {
   ['Dark Flat'] = {
     -- ANSI カラー (0-7: 通常色)
     ansi = {
-      '#000000', -- black (Ansi 0)
+      '#081821', -- black (Ansi 0)
       '#ee2c68', -- red (Ansi 1)
       '#3dd178', -- green (Ansi 2)
       '#ffc900', -- yellow (Ansi 3)
@@ -43,45 +46,46 @@ config.color_schemes = {
     },
     
     -- 背景色
-    background = '#191a1a',
+    -- background = '#191a1a',
+    background = '#0B1F2A',
     
     -- 前景色（テキストの基本色）
     foreground = '#eceff1',
     
     -- カーソル関連
     cursor_bg = '#ee2c68',
-    cursor_fg = '#000000',
+    cursor_fg = '#FFFFFF',
     cursor_border = '#ee2c68',
     
     -- 選択範囲
-    selection_bg = '#259b47',
-    selection_fg = '#f1f1f1',
-    
+    selection_bg = '#6C3B9A',
+    selection_fg = '#ffffff',
+
     -- URL リンク
-    compose_cursor = '#005bb6',
+    compose_cursor = '#ee2c68',
     
     -- タブバー（オプション）
     tab_bar = {
-      background = '#191a1a',
+      background = '#0B1F2A',
       active_tab = {
-        bg_color = '#5d4090',
-        fg_color = '#f1f1f1',
-        intensity = 'Bold',
+        bg_color = '#0B1F2A',
+        fg_color = '#eceff1',
+        underline = 'Single',
       },
       inactive_tab = {
-        bg_color = '#3c4043',
+        bg_color = '#0B1F2A',
         fg_color = '#b0bec5',
       },
       inactive_tab_hover = {
-        bg_color = '#505055',
+        bg_color = '#123043',
         fg_color = '#eceff1',
       },
       new_tab = {
-        bg_color = '#191a1a',
+        bg_color = '#0B1F2A',
         fg_color = '#b0bec5',
       },
       new_tab_hover = {
-        bg_color = '#3c4043',
+        bg_color = '#123043',
         fg_color = '#eceff1',
       },
     },
@@ -92,7 +96,7 @@ config.color_schemes = {
 config.color_scheme = 'Dark Flat'
 
 -- ウィンドウの設定
-config.window_decorations = "RESIZE"
+config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
 
 -- 起動時のウィンドウサイズ
 config.initial_cols = 120
@@ -101,7 +105,7 @@ config.initial_rows = 30
 -- タブバーの設定
 config.tab_max_width = 100
 config.enable_tab_bar = true
-config.hide_tab_bar_if_only_one_tab = true
+-- config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 config.tab_bar_at_bottom = false
 config.show_new_tab_button_in_tab_bar = false
@@ -187,8 +191,40 @@ config.window_close_confirmation = "NeverPrompt"
 config.window_padding = {
   left = 20,
   right = 20,
-  top = 10,
+  top = 55,
   bottom = 50,
 }
+
+wezterm.on("update-status", function(window, pane)
+  local overrides = window:get_config_overrides() or {}
+
+  -- タブが表示されているか（= 2枚以上 or hide_tab_bar_if_only_one_tab=false など）
+  local tab_count = #window:mux_window():tabs()
+  local tab_bar_visible = tab_count > 1 or (window:effective_config().hide_tab_bar_if_only_one_tab == false)
+
+  -- タブバーが見えているなら top は小さく、見えてないなら大きく
+  local top_padding = tab_bar_visible and 15 or 55
+
+  overrides.window_padding = overrides.window_padding or {}
+  -- overrides.window_padding.left = 20
+  -- overrides.window_padding.right = 20
+  -- overrides.window_padding.bottom = 50
+  overrides.window_padding.top = top_padding
+
+  window:set_config_overrides(overrides)
+end)
+
+-- システムベル音を有効化（Claude Codeのタスク完了通知用）
+config.audible_bell = "SystemBeep"
+
+-- Shift+Enterで改行を送信
+config.keys = {
+  {
+    key = 'Enter',
+    mods = 'SHIFT',
+    action = wezterm.action.SendString('\n')
+  },
+}
+
 
 return config
