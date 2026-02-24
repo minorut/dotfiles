@@ -62,7 +62,7 @@ config.color_schemes = {
     selection_fg = '#ffffff',
 
     -- URL リンク
-    compose_cursor = '#ee2c68',
+    compose_cursor = '#6C3B9A',
     
     -- タブバー（オプション）
     tab_bar = {
