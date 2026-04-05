@@ -17,6 +17,7 @@ config.line_height = 1.3
 config.font_size = 20.0
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
 
+
 -- カラースキーム
 config.color_schemes = {
   -- @see https://github.com/QuentinWatt/dark-flat-iterm-colors
@@ -94,6 +95,7 @@ config.color_schemes = {
 
 -- カラースキームを適用
 config.color_scheme = 'Dark Flat'
+-- config.color_scheme = "Solarized Light"
 
 -- ウィンドウの設定
 config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
